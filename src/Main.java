@@ -86,7 +86,14 @@ public class Main
         do {
             wrongInput = false;
             System.out.println("Total Income: " + totalCash(incomeCash));
-            System.out.println("========================");
+
+            //BREAK STATEMENT
+            for(int i = 0; i<=25; i++){
+                if(i == 15){
+                    break;
+                }
+                System.out.print("=");
+            }
 
             viewHistory("incomes");
 
@@ -116,7 +123,15 @@ public class Main
         do {
             wrongInput = false;
             System.out.println("Total Expenses: " + totalCash(outcomeCash));
-            System.out.println("========================");
+            //CONTINUE STATEMENT
+            for(int i = 0; i<=15; i++){
+                if(i == 5){
+                    continue;
+                }
+                System.out.print("=");
+            }
+
+            System.out.println();
 
             viewHistory("outcomes");
 
@@ -168,7 +183,8 @@ public class Main
 
         //FOR LOOP
         for(int i = 0; i<y.size(); i++){
-            System.out.println(y.get(i) + "\t\t\t\t" + x.get(i));
+            System.out.println(y.get(i) + "--------------------" + x.get(i));
+
         }
     }
 
