@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Main
 {
-    static float totalCash = 0f, income = 0f, outcome = 0f;
+
     static Scanner userInput;
 
     //initiate ArrayList
@@ -15,8 +15,7 @@ public class Main
     public static void main(String[] args) {
 
         userInput = new Scanner(System.in);
-        System.out.println("Thirdy Financial Management System Mobile App");
-
+        System.out.println("Thirdy Financial Management System");
         initiateIncomeOutCome(); //Store Income Name and Income Cash
         homePage();
 
@@ -44,22 +43,24 @@ public class Main
         outcomeCash.add(120f);
     }
 
-
     public static void homePage(){
+        //VARIABLE
         int chooseFeatures;
         boolean wrongInput = true;
+
+        //DO WHILE STATEMENT
         do {
             wrongInput = false;
             System.out.println("Current Cash: " +  (totalCash(incomeCash) - totalCash(outcomeCash)));
 
             System.out.println("\nOption: ");
             System.out.println("[1] Income");
-            System.out.println("[2] Outcome");
+            System.out.println("[2] Expenses");
             System.out.println("[3] Exit");
 
             System.out.println("\nType >");
             chooseFeatures = userInput.nextInt();
-
+            //SWITCH STATEMENT
             switch(chooseFeatures){
                 case 1:
                     income();
@@ -80,6 +81,8 @@ public class Main
     public static void income(){
         int chooseFeaturesIncome;
         boolean wrongInput = true;
+
+        //DO WHILE STATEMENT
         do {
             wrongInput = false;
             System.out.println("Total Income: " + totalCash(incomeCash));
@@ -92,6 +95,7 @@ public class Main
             System.out.println("[2] Back To Menu");
             System.out.println("\nType >");
             chooseFeaturesIncome = userInput.nextInt();
+            //SWITCH STATEMENT
             switch(chooseFeaturesIncome){
                 case 1:
                     add("incomes");
@@ -111,16 +115,17 @@ public class Main
         boolean wrongInput = true;
         do {
             wrongInput = false;
-            System.out.println("Total Outcome: " + totalCash(outcomeCash));
+            System.out.println("Total Expenses: " + totalCash(outcomeCash));
             System.out.println("========================");
 
             viewHistory("outcomes");
 
             System.out.println("\n\nOption: ");
-            System.out.println("[1] Add Income");
+            System.out.println("[1] Add Expenses");
             System.out.println("[2] Back To Menu");
             System.out.println("\nType >");
             chooseFeaturesOutcome = userInput.nextInt();
+            //SWITCH STATEMENT
             switch(chooseFeaturesOutcome){
                 case 1:
                     add("outcomes");
@@ -136,36 +141,101 @@ public class Main
     }
 
     public static void viewHistory(String transaction){
+
+        //NESTED IF ELSE
         if(transaction.equals("incomes")){
+
+            if(incomeCash.size() == 10){
+                System.out.println("You Reached 10 list of Income! Keep It up!\n");
+            } else if (incomeCash.size() == 20) {
+                System.out.println("You Reached 20 list of Income! Keep It up!\n");
+            }
+
             System.out.println("Income History\n");
             printHistory(incomeName, incomeCash);
+
         }else if(transaction.equals("outcomes")){
             System.out.println("Outcome History\n");
             printHistory(outcomeName, outcomeCash);
+        }else{
+            System.out.println("Error");
+            homePage();
         }
     }
 
     public static void printHistory(ArrayList<String> y, ArrayList<Float> x){
         System.out.println("Name\t\t\t\t\t\tPrice");
 
+        //FOR LOOP
         for(int i = 0; i<y.size(); i++){
             System.out.println(y.get(i) + "\t\t\t\t" + x.get(i));
         }
     }
 
-
     public static void add(String transaction){
-        if(transaction.equals("income")){
-            System.out.println("income");
-        }else if(transaction.equals("outcome")){
-            System.out.println("outcome");
+        Scanner userInputTitle  = new Scanner(System.in);
+        Scanner userInputCash  = new Scanner(System.in);
+
+        boolean nameValid = true, cashValid = true;
+        String inputName = "";
+        float inputPrice;
+
+        String statement = transaction.equals("incomes") ?  "Income Title: " : "Expenses Title: ";
+        System.out.println(statement);
+
+        inputName = userInputTitle.nextLine() ;
+        nameValid =  !inputName.equals("") ?  true : false;
+
+        //WHILE LOOP
+        while (nameValid == false){
+            System.out.println("Please input Title");
+            //TERNARY CONDITION
+            statement = transaction.equals("incomes") ?  "Income Title: " : "Expenses Title: ";
+            System.out.println(statement);
+            inputName = userInput.nextLine();
+
+            //IF STATEMENT
+            if(!inputName.equals("")){
+                nameValid = true;
+            }
+
+        }
+
+
+        System.out.println("Cash: ");
+        inputPrice = userInputCash.nextFloat();
+        //TERNARY CONDITION
+        cashValid =  inputPrice > 0f ?  true : false;
+
+        //WHILE LOOP
+        while (cashValid == false){
+            System.out.println("Please input Cash");
+            System.out.println("Cash: ");
+            inputPrice = userInput.nextFloat();
+
+            //IF STATEMENT
+            if(inputPrice > 0f){
+                cashValid = true;
+            }
+
+        }
+
+        //IF ELSE STATEMENT
+        if(transaction.equals("incomes")){
+            incomeName.add(inputName);
+            incomeCash.add(inputPrice);
+            income();
+        }else if(transaction.equals("outcomes")){
+            outcomeName.add(inputName);
+            outcomeCash.add(inputPrice);
+            outcome();
         }
     }
-
 
     //Compute total Income
     public static float totalCash(ArrayList<Float> x){
           float total = 0f;
+          //FOR LOOP
            for(int i = 0; i< x.size(); i++){
                total += x.get(i);
           }
