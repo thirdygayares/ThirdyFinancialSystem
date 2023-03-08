@@ -69,7 +69,8 @@ public class Main
                     outcome();
                     break;
                 case 3:
-                    System.exit(0);
+                    //when the user exit
+                    exitMethod();
                     break;
                 default:
                     System.out.println("Wrong!! Try Again");
@@ -77,6 +78,9 @@ public class Main
             }
         }while (wrongInput == true);
     }
+
+
+
 
     public static void income(){
         int chooseFeaturesIncome;
@@ -250,17 +254,31 @@ public class Main
 
     //Compute total Income
     public static float totalCash(ArrayList<Float> x){
-          float total = 0f;
-          //FOR LOOP
-           for(int i = 0; i< x.size(); i++){
-               total += x.get(i);
-          }
-           return  total;
+        float total = 0f;
+        //FOR LOOP
+        for(int i = 0; i< x.size(); i++){
+            total += x.get(i);
+        }
+        return  total;
     }
 
 
+    //when the users Exit
+
+    private static void exitMethod() {
+
+      //clear the income and outcome Arraylist
+      incomeName.clear();
+      incomeCash.clear();
+      outcomeName.clear();
+      outcomeCash.clear();
+
+      //garbage collection to free up memory
+      System.gc();
+
+      //printing
+      System.out.println("Garbage collection completed");
+      System.exit(0);
+    }
+
 }    
-
-    
-
-
